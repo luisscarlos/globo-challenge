@@ -1,0 +1,49 @@
+version: '3.2'
+
+services:
+  postgres:
+    image: postgres:14.5
+    hostname: subscription-postgres
+    container_name: subscription-postgres
+    environment:
+      POSTGRES_DB: subscription-postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - subscription-development-network
+    volumes:
+      - ~/.docker-conf/database:/var/lib/subscription-postgresql
+      
+  pgadmin:
+    image: dpage/pgadmin4:6.14
+    hostname: subscription-pgadmin4
+    container_name: subscription-pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "9090:80"
+    depends_on:
+      - postgres
+    networks:
+      - subscription-development-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'subscription-rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - subscription-development-network
+  
+networks:
+  subscription-development-network:
+    driver: bridge
+    
+    
