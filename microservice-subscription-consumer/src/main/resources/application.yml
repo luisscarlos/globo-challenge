@@ -1,0 +1,39 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/subscription-postgres
+    username: postgres
+    password: postgres
+  rabbitmq:
+    host: localhost
+    port: 15672
+    username: guest
+    password: guest
+    exchange: subscription-notifications
+    dead-letter-exchange: x-dead-letter-exchange
+    purchased-queue: subscription-purchased
+    canceled-queue: subscription-canceled
+    restarted-queue: subscription-restarted
+    dead-letter-queue: x-dead-letter-queue
+    purchased-routing-key: subscription-purchased.routing-key
+    canceled-routing-key: subscription-canceled.routing-key
+    restarted-routing-key: subscription-restarted.routing-key
+    dead-letter-routing-key: x-dead-letter-routing-key
+    #activate retry and send message to DLQ if not acknowledged
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 5
+          max-interval: 10s
+          multiplier: 2
+server:
+  port: 8081
+  error:
+    include-stacktrace: never
