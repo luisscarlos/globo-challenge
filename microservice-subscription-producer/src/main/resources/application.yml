@@ -1,1 +1,19 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 15672
+    username: guest
+    password: guest
+    exchange: subscription-notifications
+    purchased-routing-key: subscription-purchased.routing-key
+    canceled-routing-key: subscription-canceled.routing-key
+    restarted-routing-key: subscription-restarted.routing-key
+    dead-letter-routing-key: x-dead-letter-routing-key
 
+  server:
+    port: 8080
+    error:
+      include-stacktrace: never
+
+app:
+  message: message successfully sent
