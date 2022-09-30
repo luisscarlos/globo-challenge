@@ -61,20 +61,16 @@ public class ConsumerService {
         subscriptionRepository.save(subscription);
         eventHistoryRepository.save(eventHistory);
     }
-    
+
     private Subscription handleSubscription(String subscriptionId, Status status) {
         Optional<Subscription> subscriptionById = subscriptionRepository.findById(subscriptionId);
-
-        Subscription subscription = new Subscription();
         if (subscriptionById.isPresent()) {
-            subscription.setCreatedAt(subscriptionById.get().getCreatedAt());
-        } else {
-            subscription.setCreatedAt(LocalDateTime.now());
-        }
-        subscription.setId(subscriptionId);
-        subscription.setUpdatedAt(LocalDateTime.now());
-        subscription.setStatus(status);
+            subscriptionById.get().setUpdatedAt(LocalDateTime.now());
+            subscriptionById.get().setStatus(status);
 
-        return subscription;
+            return subscriptionById.get();
+        }
+
+        return new Subscription(subscriptionId, status);
     }
 }
