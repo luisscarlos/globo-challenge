@@ -21,13 +21,14 @@
 - fila **x-dead-letter-queue**: recebe mensagens que não foram reconhecidas pelas filas especificadas de assinaturas, seja por erro ou qualquer outro fator. **DLQ implementado**.
 <img src="RabbitMQ.png" width="500" height="100">
 
-## Requisitos para executar o projeto
+
+# Requisitos para executar o projeto
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 - [JDK 11+](https://www.oracle.com/br/java/technologies/javase/jdk11-archive-downloads.html)
 - [Python](https://www.python.org/downloads/)
 
-## Como executar o projeto
+# Como executar o projeto
 Clone o projeto.
 ```bash
   git clone https://github.com/SelecaoGlobocom/luis-carlos.git
@@ -52,9 +53,20 @@ Abra um novo terminal na raiz do projeto e execute o script que importa as notif
   python import_notificacoes.py
 ```
 
+
+## Rotas
+Producer Controller
+| Method  | Path  | Description  |
+| ------------ | ------------ | ------------ |
+| POST  |  /api/v1/notify | Executa uma notificação de assinatura |
+
+## Acessar broker RabbitMQ
+- Acessar pelo navegador http://localhost:15672/ com as credenciais de usuário e senha: guest
+
 ### Futuras features
 - Testes unitários/funcionais.
-- Spring Secutiry para adicionar autenticação na rota.
+- Swagger no Producer.
+- Spring Secutiry para adicionar autenticação da rota no producer.
 - Database migration com Flyway.
 - Adicionar pré-handle no controller para retornar uma mensagem de erro amigável para o usuário se o campo "notification_type" não for preenchido com possíveis opções do Enum.
-- Automatizar o erro proposital no consumer lançando um Throw condicional através de uma variável de ambiente para exibir as mensagens não reconhecidas pelo listener no consumer e caindo na fila DLQ do RabbitMQ.
+- Automatizar o erro proposital no consumer lançando um Throw condicional através de uma variável de ambiente booleana para exibir as mensagens não reconhecidas pelo listener no consumer e caindo na fila DLQ do RabbitMQ.
