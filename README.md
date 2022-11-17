@@ -1,3 +1,5 @@
+Desafio desenvolvido para integrar o time de desenvolvimento da [TV Globo](https://www.globo.com/). Descrição do desafio no arquivo **[CHALLENGE.md](https://github.com/luisscarlos/globo-challenge/blob/main/CHALLENGE.md)**
+
 # Tecnologias utilizadas
 
 - **[Spring Boot](https://spring.io/projects/spring-boot)**
